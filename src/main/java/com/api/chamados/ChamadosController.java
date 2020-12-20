@@ -1,7 +1,11 @@
 package com.api.chamados;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +21,15 @@ import com.api.model.Chamado;
 public class ChamadosController {
 
 	public static ChamadosDAO db = new ChamadosDAO();
+	
+	@Autowired
+	private DiscoveryClient discoveryClient;
+
+	@RequestMapping("/service-instances/{applicationName}")
+	public List<ServiceInstance> serviceInstancesByApplicationName(
+			@PathVariable String applicationName) {
+		return this.discoveryClient.getInstances(applicationName);
+	}
 	
 	@RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public String abrirChamado(@RequestBody Chamado chamado) {
