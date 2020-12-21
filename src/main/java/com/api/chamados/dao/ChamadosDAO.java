@@ -1,14 +1,13 @@
-package com.api.dao;
+package com.api.chamados.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
 
-import com.api.database.DbConfig;
-import com.api.model.Chamado;
+import com.api.chamados.database.DbConfig;
+import com.api.chamados.model.Chamado;
 
 public class ChamadosDAO {
 
