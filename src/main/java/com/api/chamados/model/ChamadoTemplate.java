@@ -3,7 +3,7 @@ package com.api.chamados.model;
 public class ChamadoTemplate {
 
 	private Integer userId;
-	private Integer tipo;
+	private TipoChamado tipoChamado;
 	private String descricao;
 
 	public Integer getUserId() {
@@ -14,12 +14,12 @@ public class ChamadoTemplate {
 		this.userId = userId;
 	}
 
-	public Integer getTipo() {
-		return tipo;
+	public TipoChamado getTipoChamado() {
+		return tipoChamado;
 	}
 
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
+	public void setTipoChamado(TipoChamado tipoChamado) {
+		this.tipoChamado = tipoChamado;
 	}
 
 	public String getDescricao() {

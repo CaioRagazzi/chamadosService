@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -16,19 +18,21 @@ public class Chamado {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_chamado", updatable = false, nullable = false)
-	private int id_chamado;
+	private int idChamado;
 
-	@Column(nullable = false)
-	private Integer user_id;
+	@Column(nullable = false, name = "user_id")
+	private Integer userId;
 
-	@Column(nullable = false)
-	private Integer tipo;
+	@ManyToOne
+	@JoinColumn(name = "id_tipo_chamado", nullable = false)
+	private TipoChamado tipoChamado;
 
 	@Column(nullable = false, length = 500)
 	private String descricao;
 
-	@Column(nullable = false)
-	private int status;
+	@ManyToOne
+	@JoinColumn(name = "id_status_chamado", nullable = false)
+	private StatusChamado statusChamado;
 
 	@Column(nullable = false)
 	private Date data_abertura;
@@ -37,42 +41,42 @@ public class Chamado {
 		super();
 	}
 
-	public Chamado(@JsonProperty("idChamado") int id_chamado, @JsonProperty("userId") int user_id,
-			@JsonProperty("tipo") int tipo, @JsonProperty("descricao") String descricao,
-			@JsonProperty("status") int status, @JsonProperty("dataAbertura") Date data_abertura) {
+	public Chamado(@JsonProperty("idChamado") int idChamado, @JsonProperty("userId") int userId,
+			@JsonProperty("tipo") TipoChamado tipoChamado, @JsonProperty("descricao") String descricao,
+			@JsonProperty("status") StatusChamado statusChamado, @JsonProperty("dataAbertura") Date data_abertura) {
 
 		super();
 
-		this.id_chamado = id_chamado;
-		this.user_id = user_id;
-		this.tipo = tipo;
+		this.idChamado = idChamado;
+		this.userId = userId;
+		this.tipoChamado = tipoChamado;
 		this.descricao = descricao;
-		this.status = status;
+		this.statusChamado = statusChamado;
 		this.data_abertura = data_abertura;
 	}
 
 	public int getIdChamado() {
-		return id_chamado;
+		return idChamado;
 	}
 
 	public void setIdChamado(int id_chamado) {
-		this.id_chamado = id_chamado;
+		this.idChamado = id_chamado;
 	}
 
 	public Integer getUserId() {
-		return user_id;
+		return userId;
 	}
 
-	public void setUserId(Integer user_id) {
-		this.user_id = user_id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
-	public Integer getTipo() {
-		return tipo;
+	public TipoChamado getTipoChamado() {
+		return tipoChamado;
 	}
 
-	public void setTipo(Integer tipo) {
-		this.tipo = tipo;
+	public void setTipoChamado(TipoChamado idTipoChamado) {
+		this.tipoChamado = idTipoChamado;
 	}
 
 	public String getDescricao() {
@@ -83,12 +87,12 @@ public class Chamado {
 		this.descricao = descricao;
 	}
 
-	public Integer getStatus() {
-		return status;
+	public StatusChamado getStatusChamado() {
+		return this.statusChamado;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setStatusChamado(StatusChamado statusChamado) {
+		this.statusChamado = statusChamado;
 	}
 
 	public Date getData_abertura() {
