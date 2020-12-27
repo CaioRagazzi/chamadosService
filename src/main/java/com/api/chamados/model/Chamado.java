@@ -34,16 +34,16 @@ public class Chamado {
 	@JoinColumn(name = "id_status_chamado", nullable = false)
 	private StatusChamado statusChamado;
 
-	@Column(nullable = false)
-	private Date data_abertura;
+	@Column(name = "data_abertura", nullable = false)
+	private Date dataAbertura;
 
 	public Chamado() {
 		super();
 	}
 
 	public Chamado(@JsonProperty("idChamado") int idChamado, @JsonProperty("userId") int userId,
-			@JsonProperty("tipo") TipoChamado tipoChamado, @JsonProperty("descricao") String descricao,
-			@JsonProperty("status") StatusChamado statusChamado, @JsonProperty("dataAbertura") Date data_abertura) {
+			@JsonProperty("tipoChamado") TipoChamado tipoChamado, @JsonProperty("descricao") String descricao,
+			@JsonProperty("statusChamado") StatusChamado statusChamado, @JsonProperty("dataAbertura") Date dataAbertura) {
 
 		super();
 
@@ -52,7 +52,7 @@ public class Chamado {
 		this.tipoChamado = tipoChamado;
 		this.descricao = descricao;
 		this.statusChamado = statusChamado;
-		this.data_abertura = data_abertura;
+		this.dataAbertura = dataAbertura;
 	}
 
 	public int getIdChamado() {
@@ -95,11 +95,11 @@ public class Chamado {
 		this.statusChamado = statusChamado;
 	}
 
-	public Date getData_abertura() {
-		return data_abertura;
+	public Date getDataAbertura() {
+		return dataAbertura;
 	}
 
-	public void setData_abertura(Date data_abertura) {
-		this.data_abertura = data_abertura;
+	public void setDataAbertura(Date dataAbertura) {
+		this.dataAbertura = dataAbertura;
 	}
 }

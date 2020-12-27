@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
-import com.api.chamados.Utils.RandomUtils;
 import com.api.chamados.exception.ChamadoNotFoundException;
 import com.api.chamados.exception.InvalidStatusException;
 import com.api.chamados.exception.UserNotFoundException;
@@ -16,8 +15,6 @@ import com.api.chamados.model.Chamado;
 import com.api.chamados.model.ChamadoTemplate;
 import com.api.chamados.model.StatusChamado;
 import com.api.chamados.repository.ChamadoRepository;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
 @Service
 @ComponentScan("com.api.chamados.repository")
@@ -29,17 +26,16 @@ public class ChamadoService {
 //	@HystrixCommand(fallbackMethod = "createChamadoCircuitBreaker", commandProperties = {
 //			@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000") })
 	public Chamado createChamado(ChamadoTemplate chamadoTp) {
-
-		if (RandomUtils.random50PercentError() == 1) {
-			RandomUtils.randomSleep();
-		}
-
 		Chamado chamado = new Chamado();
+		StatusChamado statusChamado = new StatusChamado();
+		statusChamado.setIdStatusChamado(1);
+		statusChamado.setDescricao("");
+
 		chamado.setUserId(chamadoTp.getUserId());
 		chamado.setTipoChamado(chamadoTp.getTipoChamado());
 		chamado.setDescricao(chamadoTp.getDescricao());
-		chamado.setStatusChamado(chamado.getStatusChamado());
-		chamado.setData_abertura(new Date(System.currentTimeMillis()));
+		chamado.setStatusChamado(statusChamado);
+		chamado.setDataAbertura(new Date(System.currentTimeMillis()));
 
 		return chamadoRepository.save(chamado);
 	}
@@ -87,20 +83,4 @@ public class ChamadoService {
 			throw new ChamadoNotFoundException();
 		}
 	}
-
-//	public Chamado createChamadoCircuitBreaker(ChamadoTemplate chamadoTp) {
-//		throw new SystemOfflineException();
-//	}
-//
-//	public Optional<Chamado> getChamadoByIdCircuitBreaker(int idChamado) {
-//		throw new SystemOfflineException();
-//	}
-//
-//	public Collection<Chamado> getChamadosByUserIdCircuitBreaker(int userId) {
-//		throw new SystemOfflineException();
-//	}
-//
-//	public Chamado updateStatusCircuitBreaker(int numeroChamado, int status) {
-//		throw new SystemOfflineException();
-//	}
 }
