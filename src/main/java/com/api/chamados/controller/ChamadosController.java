@@ -10,12 +10,12 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.chamados.model.Chamado;
@@ -43,15 +43,16 @@ public class ChamadosController {
 	}
 	
 	@ApiOperation(value = "Abre um novo chamado")
+	@ResponseStatus(HttpStatus.CREATED)
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public ResponseEntity<Chamado> createChamado(@RequestBody ChamadoTemplate chamado) {
-		return new ResponseEntity<Chamado>(chamadoService.createChamado(chamado), HttpStatus.CREATED);
+	public Chamado createChamado(@RequestBody ChamadoTemplate chamado) {
+		return chamadoService.createChamado(chamado);
 	}
 
 	@ApiOperation(value = "Retorna os detalhes de um chamado")
 	@GetMapping(value = "{userId}/{idChamado}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Optional<Chamado>> getChamadosById(@PathVariable("idChamado") int idChamado){
-		return new ResponseEntity<>(chamadoService.getChamadoById(idChamado), HttpStatus.OK);
+	public Optional<Chamado> getChamadosById(@PathVariable("idChamado") int idChamado){
+		return chamadoService.getChamadoById(idChamado);
 	}
 	
 	@ApiOperation(value = "Lista os chamados de um usuário")
