@@ -3,7 +3,18 @@
 Para criar o banco de dados, executar o comando no MySQL:<br/>
 `CREATE SCHEMA "chamados_db";` 
 
-As tabelas serão criadas automaticamente ao executar a aplicação.
+As tabelas serão criadas automaticamente ao executar a aplicação, porém é necessário popular as tabelas status_chamado e tipo_chamado:
+
+`INSERT INTO "chamados_db"."status_chamado" ("descricao") 
+VALUES ("aberto"),
+("em atendimento"),
+("encerrado"),
+("cancelado");`
+
+`INSERT INTO `chamados_db`.`tipo_chamado` (`descricao`) 
+VALUES ('incidente'),
+('requisição');`
+
 
 As configurações do BD ficam no arquivo application.properties (https://github.com/erickfaraujo/chamadosService/blob/main/src/main/resources/application.properties). Caso seja necessário alterar as configurações de SCHEMA, usuário ou senha, alterar nesse arquivo.<br/>
 
