@@ -11,9 +11,9 @@ VALUES ("aberto"),
 ("encerrado"),
 ("cancelado");`
 
-`INSERT INTO `chamados_db`.`tipo_chamado` (`descricao`) 
-VALUES ('incidente'),
-('requisição');`
+`INSERT INTO "chamados_db"."tipo_chamado" ("descricao") 
+VALUES ("incidente"),
+("requisição");`
 
 
 As configurações do BD ficam no arquivo application.properties (https://github.com/erickfaraujo/chamadosService/blob/main/src/main/resources/application.properties). Caso seja necessário alterar as configurações de SCHEMA, usuário ou senha, alterar nesse arquivo.<br/>
