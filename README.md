@@ -5,13 +5,13 @@ Para criar o banco de dados, executar o comando no MySQL:<br/>
 
 As tabelas serão criadas automaticamente ao executar a aplicação, porém é necessário popular as tabelas status_chamado e tipo_chamado:
 
-`INSERT INTO "chamados_db"."status_chamado" ("descricao") 
+`INSERT INTO chamados_db.status_chamado (descricao) 
 VALUES ("aberto"),
 ("em atendimento"),
 ("encerrado"),
 ("cancelado");`
 
-`INSERT INTO "chamados_db"."tipo_chamado" ("descricao") 
+`INSERT INTO chamados_db.tipo_chamado (descricao) 
 VALUES ("incidente"),
 ("requisição");`
 
