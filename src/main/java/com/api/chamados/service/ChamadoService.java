@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.api.chamados.exception.ChamadoNotFoundException;
 import com.api.chamados.exception.InvalidStatusException;
+import com.api.chamados.exception.InvalidTypeException;
 import com.api.chamados.exception.UserNotFoundException;
 import com.api.chamados.model.Chamado;
 import com.api.chamados.model.ChamadoTemplate;
@@ -26,18 +27,23 @@ public class ChamadoService {
 //	@HystrixCommand(fallbackMethod = "createChamadoCircuitBreaker", commandProperties = {
 //			@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000") })
 	public Chamado createChamado(ChamadoTemplate chamadoTp) {
-		Chamado chamado = new Chamado();
-		StatusChamado statusChamado = new StatusChamado();
-		statusChamado.setIdStatusChamado(1);
-		statusChamado.setDescricao("");
 
-		chamado.setUserId(chamadoTp.getUserId());
-		chamado.setTipoChamado(chamadoTp.getTipoChamado());
-		chamado.setDescricao(chamadoTp.getDescricao());
-		chamado.setStatusChamado(statusChamado);
-		chamado.setDataAbertura(new Date(System.currentTimeMillis()));
+		if (chamadoTp.getTipoChamado().getIdTipoChamado() > 0 && chamadoTp.getTipoChamado().getIdTipoChamado() < 3) {
+			Chamado chamado = new Chamado();
+			StatusChamado statusChamado = new StatusChamado();
+			statusChamado.setIdStatusChamado(1);
+			statusChamado.setDescricao("");
 
-		return chamadoRepository.save(chamado);
+			chamado.setUserId(chamadoTp.getUserId());
+			chamado.setTipoChamado(chamadoTp.getTipoChamado());
+			chamado.setDescricao(chamadoTp.getDescricao());
+			chamado.setStatusChamado(statusChamado);
+			chamado.setDataAbertura(new Date(System.currentTimeMillis()));
+
+			return chamadoRepository.save(chamado);
+		} else {
+			throw new InvalidTypeException();
+		}
 	}
 
 	public Optional<Chamado> getChamadoById(int idChamado) {
@@ -69,7 +75,7 @@ public class ChamadoService {
 			Optional<Chamado> c = getChamadoById(numeroChamado);
 			Chamado chamado = c.get();
 
-			if (status > 0) {
+			if (status > 0 && status < 5) {
 				StatusChamado st = new StatusChamado();
 				st.setIdStatusChamado(status);
 				chamado.setStatusChamado(st);
