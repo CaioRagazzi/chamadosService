@@ -1,4 +1,4 @@
-package com.api.chamados;
+package com.api.tcdChamados;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

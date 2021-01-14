@@ -1,4 +1,4 @@
-package com.api.chamados.controller;
+package com.api.tcdChamados.controller;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api.chamados.model.Chamado;
-import com.api.chamados.model.ChamadoTemplate;
-import com.api.chamados.service.ChamadoService;
+import com.api.tcdChamados.model.Chamado;
+import com.api.tcdChamados.model.ChamadoTemplate;
+import com.api.tcdChamados.service.ChamadoService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,15 +44,15 @@ public class ChamadosController {
 	
 	@ApiOperation(value = "Abre um novo chamado")
 	@ResponseStatus(HttpStatus.CREATED)
-	@RequestMapping(value = "", method = RequestMethod.POST)
+	@RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Chamado createChamado(@RequestBody ChamadoTemplate chamado) {
 		return chamadoService.createChamado(chamado);
 	}
 
 	@ApiOperation(value = "Retorna os detalhes de um chamado")
 	@GetMapping(value = "{userId}/{idChamado}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Optional<Chamado> getChamadosById(@PathVariable("idChamado") int idChamado){
-		return chamadoService.getChamadoById(idChamado);
+	public Optional<Chamado> getChamadosById(@PathVariable("userId") int userId, @PathVariable("idChamado") int idChamado){
+		return chamadoService.getChamadoById(idChamado, userId);
 	}
 	
 	@ApiOperation(value = "Lista os chamados de um usuário")
@@ -64,6 +64,6 @@ public class ChamadosController {
 	@ApiOperation(value = "Atualiza o status de um chamado")
 	@RequestMapping(value = "", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Chamado updateStatus(@RequestBody Chamado chamado) {
-		return chamadoService.updateStatus(chamado.getIdChamado(), chamado.getStatusChamado().getIdStatusChamado());
+		return chamadoService.updateStatus(chamado);
 	}
 }

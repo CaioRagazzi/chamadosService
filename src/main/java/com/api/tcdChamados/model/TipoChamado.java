@@ -1,4 +1,4 @@
-package com.api.chamados.model;
+package com.api.tcdChamados.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,26 +7,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class StatusChamado {
+public class TipoChamado {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_status_chamado", nullable = false, updatable = false)
-	private int idStatusChamado;
+	@Column(name = "id_tipo_chamado", nullable = false, updatable = false)
+	private int idTipoChamado;
 
 	@Column(nullable = false, updatable = false)
 	private String descricao;
-
-	public StatusChamado() {
+	
+	public TipoChamado() {
 		super();
 	}
 
-	public int getIdStatusChamado() {
-		return idStatusChamado;
+	public int getIdTipoChamado() {
+		return idTipoChamado;
 	}
 
-	public void setIdStatusChamado(int idStatusChamado) {
-		this.idStatusChamado = idStatusChamado;
+	public void setIdTipoChamado(int idTipoChamado) {
+		this.idTipoChamado = idTipoChamado;
 	}
 
 	public String getDescricao() {

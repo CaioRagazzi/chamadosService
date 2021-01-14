@@ -1,4 +1,4 @@
-package com.api.chamados.service;
+package com.api.tcdChamados.service;
 
 import java.sql.Date;
 import java.util.Collection;
@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
-import com.api.chamados.exception.ChamadoNotFoundException;
-import com.api.chamados.exception.InvalidStatusException;
-import com.api.chamados.exception.InvalidTypeException;
-import com.api.chamados.exception.UserNotFoundException;
-import com.api.chamados.model.Chamado;
-import com.api.chamados.model.ChamadoTemplate;
-import com.api.chamados.model.StatusChamado;
-import com.api.chamados.repository.ChamadoRepository;
+import com.api.tcdChamados.exception.ChamadoNotFoundException;
+import com.api.tcdChamados.exception.InvalidStatusException;
+import com.api.tcdChamados.exception.InvalidTypeException;
+import com.api.tcdChamados.exception.UserNotFoundException;
+import com.api.tcdChamados.model.Chamado;
+import com.api.tcdChamados.model.ChamadoTemplate;
+import com.api.tcdChamados.model.StatusChamado;
+import com.api.tcdChamados.repository.ChamadoRepository;
 
 @Service
 @ComponentScan("com.api.chamados.repository")
@@ -24,8 +24,6 @@ public class ChamadoService {
 	@Autowired
 	private ChamadoRepository chamadoRepository;
 
-//	@HystrixCommand(fallbackMethod = "createChamadoCircuitBreaker", commandProperties = {
-//			@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "2000") })
 	public Chamado createChamado(ChamadoTemplate chamadoTp) {
 
 		if (chamadoTp.getTipoChamado().getIdTipoChamado() > 0 && chamadoTp.getTipoChamado().getIdTipoChamado() < 3) {
@@ -46,15 +44,16 @@ public class ChamadoService {
 		}
 	}
 
-	public Optional<Chamado> getChamadoById(int idChamado) {
+	public Optional<Chamado> getChamadoById(int idChamado, int userId) {
 
 		Optional<Chamado> chamado = chamadoRepository.findById(idChamado);
 
 		if (chamado.isPresent()) {
-			return chamado;
-		} else {
-			throw new ChamadoNotFoundException();
+			if (chamado.get().getUserId() == userId) {
+				return chamado;
+			}
 		}
+		throw new ChamadoNotFoundException();
 	}
 
 	public Collection<Chamado> getChamadosByUserId(int userId) {
@@ -69,21 +68,24 @@ public class ChamadoService {
 		}
 	}
 
-	public Chamado updateStatus(int numeroChamado, int status) {
+	public Chamado updateStatus(Chamado chamado) {
+		
+		int numeroChamado = chamado.getIdChamado();
+		int status = chamado.getStatusChamado().getIdStatusChamado();
+		int userId = chamado.getUserId();
 
-		if (numeroChamado > 0) {
-			Optional<Chamado> c = getChamadoById(numeroChamado);
-			Chamado chamado = c.get();
+		if (numeroChamado > 0 && userId > 0) {
+			Optional<Chamado> c = getChamadoById(numeroChamado, userId);
+			Chamado chamadoObj = c.get();
 
 			if (status > 0 && status < 5) {
 				StatusChamado st = new StatusChamado();
 				st.setIdStatusChamado(status);
-				chamado.setStatusChamado(st);
+				chamadoObj.setStatusChamado(st);
 			} else {
 				throw new InvalidStatusException();
 			}
-
-			return chamadoRepository.save(chamado);
+			return chamadoRepository.save(chamadoObj);
 
 		} else {
 			throw new ChamadoNotFoundException();
