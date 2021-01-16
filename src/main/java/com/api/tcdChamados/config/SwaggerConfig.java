@@ -1,4 +1,4 @@
-package com.api.chamados.config;
+package com.api.tcdChamados.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
-				.apis(RequestHandlerSelectors.basePackage("com.api.chamados")).build().apiInfo(metaData());
+				.apis(RequestHandlerSelectors.basePackage("com.api.tcdChamados")).build().apiInfo(metaData());
 	}
 
 	private ApiInfo metaData() {

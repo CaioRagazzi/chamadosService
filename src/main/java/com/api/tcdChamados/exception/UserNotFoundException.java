@@ -1,4 +1,4 @@
-package com.api.chamados.exception;
+package com.api.tcdChamados.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

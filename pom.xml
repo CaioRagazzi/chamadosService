@@ -9,10 +9,10 @@
 		<version>2.3.2.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.api.chamados</groupId>
-	<artifactId>chamados</artifactId>
+	<groupId>com.api.tcdChamados</groupId>
+	<artifactId>tcdChamados</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>chamados</name>
+	<name>tcdChamados</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

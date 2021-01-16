@@ -1,4 +1,4 @@
-package com.api.chamados.model;
+package com.api.tcdChamados.model;
 
 public class ChamadoTemplate {
 
